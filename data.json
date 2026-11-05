@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-05T23:03:46Z",
+ "generated": "2026-11-05T23:27:02Z",
  "owner": "techmoocher",
  "work": {
   "open_tasks": 5,
@@ -27,13 +27,13 @@
    "status": {
     "league": "Gold",
     "submitted": true,
-    "ranking_percent": 12,
-    "ranking_done": false,
-    "league_rank": 396,
+    "ranking_percent": 100,
+    "ranking_done": true,
+    "league_rank": 331,
     "league_total": 423,
-    "rank": 396,
+    "rank": 331,
     "total": 862,
-    "score": 5.77,
+    "score": 10.67,
     "boss": null,
     "eligible_for_promotion": false,
     "submits": 6,
