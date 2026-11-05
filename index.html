@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>techmoocher on CodinGame</title>
+<meta name="description" content="Where techmoocher's CodinGame bots stand: leagues, ranks and ranking progress.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: masthead, one panel per project (story left, numbers right),
+   then work counts and docs; everything stacks below 760px. */
+:root {
+  --paper: #f4f6f9;
+  --panel: #ffffff;
+  --ink: #17202d;
+  --muted: #5a6577;
+  --rule: #dce1e9;
+  --edge: #9aa5b6;
+  --ours: #2350c4;
+  --ours-soft: #dfe7fb;
+  --theirs: #b9541a;
+  --theirs-soft: #f8e3d6;
+  --good: #1f7a4d;
+  --good-soft: #dcf1e6;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0f131a; --panel: #151b24; --ink: #e4e8ef; --muted: #9aa4b5;
+    --rule: #263042; --edge: #4c586b; --ours: #86a8ff; --ours-soft: #1d2a4a;
+    --theirs: #f0915a; --theirs-soft: #3a2417; --good: #5fd39a; --good-soft: #15301f;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+}
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: max(36px, env(safe-area-inset-top, 0px)) max(48px, env(safe-area-inset-bottom, 0px));
+}
+a { color: var(--ours); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--ours); outline-offset: 2px; border-radius: 4px; }
+.label {
+  margin: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Masthead */
+.masthead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: end;
+  padding-block-end: 26px;
+  border-bottom: 1px solid var(--rule);
+}
+.masthead > div { min-width: 0; display: grid; gap: 10px; }
+h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.lede { margin: 0; max-width: 60ch; font-size: 1.06rem; color: var(--muted); }
+.taken { margin: 0; font-size: 0.88rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.board svg { width: 200px; max-width: 100%; height: auto; display: block; }
+.board .path { stroke: var(--edge); stroke-width: 1.5; }
+.board .t-ours { fill: var(--ours-soft); stroke: var(--ours); stroke-width: 2; }
+.board .t-theirs { fill: var(--theirs-soft); stroke: var(--theirs); stroke-width: 2; }
+.board .house { fill: var(--panel); stroke: var(--ink); stroke-width: 1.5; }
+.board .house.ours { fill: var(--ours); stroke: var(--ours); }
+.board .house.theirs { fill: var(--theirs); stroke: var(--theirs); }
+
+section { padding-block-start: 34px; display: grid; gap: 14px; }
+h2 { margin: 0; font-family: var(--display); font-weight: 600; font-size: 1.4rem; }
+
+/* Project panel */
+.projects { display: grid; gap: 16px; }
+.project {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 28px;
+  padding: 22px 24px;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+}
+.story { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.story h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.5rem; line-height: 1.15; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--ours-soft);
+  color: var(--ours);
+  font-variant-numeric: tabular-nums;
+}
+.chip.quiet { background: transparent; color: var(--muted); border: 1px solid var(--rule); }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.warn { background: var(--theirs-soft); color: var(--theirs); }
+.summary { margin: 0; color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.92rem; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  margin: 0;
+  align-content: start;
+}
+.stats div { display: grid; gap: 2px; min-width: 0; }
+.stats dt { font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.stats dd { margin: 0; font-size: 1.15rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.stats dd small { display: block; font-size: 0.82rem; font-weight: 400; color: var(--muted); }
+.bar { height: 6px; margin-top: 6px; border-radius: 3px; background: var(--rule); overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--ours); }
+
+/* Work and docs */
+.work { display: flex; flex-wrap: wrap; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.work li {
+  display: grid;
+  gap: 0;
+  min-width: 150px;
+  padding: 12px 18px;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+}
+.work b { font-family: var(--display); font-size: 1.7rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.work span { font-size: 0.86rem; color: var(--muted); }
+.docs { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 70ch; }
+.note { margin: 0; color: var(--muted); max-width: 70ch; }
+.status { color: var(--muted); font-style: italic; margin: 0; }
+footer {
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+@media (max-width: 760px) {
+  .masthead { grid-template-columns: minmax(0, 1fr); }
+  .board { display: none; }
+  .project { grid-template-columns: minmax(0, 1fr); padding: 18px; gap: 20px; }
+}
+@media (max-width: 380px) {
+  .stats { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="masthead">
+    <div>
+      <p class="label">Public dashboard</p>
+      <h1>techmoocher on CodinGame</h1>
+      <p class="lede">Where each of our CodinGame bots stands. Code and strategy
+        stay private while a contest runs, as CodinGame requires.</p>
+      <p class="taken" id="taken">Loading the latest numbers&hellip;</p>
+    </div>
+    <div class="board" aria-hidden="true">
+      <svg viewBox="0 0 260 172">
+        <polygon class="t-ours" points="22,132 68,44 122,112"/>
+        <polygon class="t-theirs" points="160,30 210,100 244,34"/>
+        <line class="path" x1="68" y1="44" x2="160" y2="30"/>
+        <line class="path" x1="122" y1="112" x2="160" y2="30"/>
+        <line class="path" x1="122" y1="112" x2="210" y2="100"/>
+        <line class="path" x1="22" y1="132" x2="84" y2="162"/>
+        <line class="path" x1="122" y1="112" x2="84" y2="162"/>
+        <line class="path" x1="84" y1="162" x2="236" y2="150"/>
+        <line class="path" x1="210" y1="100" x2="236" y2="150"/>
+        <circle class="house ours" cx="22" cy="132" r="6"/>
+        <circle class="house ours" cx="68" cy="44" r="6"/>
+        <circle class="house ours" cx="122" cy="112" r="6"/>
+        <circle class="house" cx="160" cy="30" r="6"/>
+        <circle class="house theirs" cx="210" cy="100" r="6"/>
+        <circle class="house theirs" cx="244" cy="34" r="6"/>
+        <circle class="house" cx="84" cy="162" r="6"/>
+        <circle class="house" cx="236" cy="150" r="6"/>
+      </svg>
+    </div>
+  </header>
+
+  <section aria-labelledby="projects-title">
+    <h2 id="projects-title">Projects</h2>
+    <div class="projects" id="projects"></div>
+  </section>
+
+  <section aria-labelledby="work-title">
+    <h2 id="work-title">Work</h2>
+    <ul class="work" id="work"></ul>
+  </section>
+
+  <section aria-labelledby="docs-title">
+    <h2 id="docs-title">Docs</h2>
+    <ul class="docs" id="docs"></ul>
+    <p class="note">Our own notes on each bot (how it plays, its tuning and its
+      tests) go public once the contest ends.</p>
+  </section>
+
+  <footer>
+    Updated after each submit and once a rank settles, from our private repo.
+    Source of this page: <a href="https://github.com/techmoocher/codingame-dashboard">techmoocher/codingame-dashboard</a>.
+  </footer>
+</div>
+
+<script>
+(async function () {
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const num = (n) => (n == null ? null : Number(n).toLocaleString("en-US"));
+  const utc = (iso) => iso.replace("T", " ").replace(/:\d\dZ$/, " UTC").replace(/Z$/, " UTC");
+
+  let data;
+  try {
+    const res = await fetch("data.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    data = await res.json();
+  } catch (err) {
+    $("taken").textContent = "The numbers did not load (" + err.message + "). Reload the page.";
+    return;
+  }
+  $("taken").textContent = "Numbers taken " + utc(data.generated) + ".";
+
+  function timeLeft(endIso) {
+    const ms = Date.parse(endIso) - Date.now();
+    if (ms <= 0) return null;
+    const h = Math.floor(ms / 3600000);
+    return h >= 48 ? Math.floor(h / 24) + " d " + (h % 24) + " h" : h + " h " + Math.floor((ms % 3600000) / 60000) + " min";
+  }
+
+  function stat(label, value, note) {
+    return "<div><dt>" + esc(label) + "</dt><dd>" + value + (note ? "<small>" + note + "</small>" : "") + "</dd></div>";
+  }
+
+  function projectHtml(p) {
+    const s = p.status || {};
+    const left = timeLeft(p.ends);
+    const chips = [
+      '<span class="chip" data-ends="' + esc(p.ends) + '">' + (left ? "Ends in " + esc(left) : "Ended " + esc(p.ends.slice(0, 10))) + "</span>",
+      '<span class="chip quiet">' + esc(p.kind) + "</span>",
+      '<span class="chip quiet">' + esc(p.language) + "</span>",
+    ];
+    let rank = "&mdash;", rankNote = s.submitted ? "after the ranking games" : "after the first submit";
+    if (s.league_rank != null) { rank = num(s.league_rank) + " / " + num(s.league_total); rankNote = "overall " + num(s.rank) + " / " + num(s.total); }
+    let ranking = "&mdash;", rankingNote = "no submit yet";
+    if (s.submitted) {
+      const pct = Math.max(0, Math.min(100, Number(s.ranking_percent) || 0));
+      ranking = s.ranking_done ? "Done" : pct + "%";
+      rankingNote = (s.ranking_done ? "all ranking games played" : "of ranking games played") +
+        '<span class="bar" aria-hidden="true"><span style="width:' + pct + '%"></span></span>';
+    }
+    const boss = s.boss ? "Rank " + num(s.boss.rank) : "&mdash;";
+    const bossNote = s.boss && s.boss.score != null ? "score " + esc(s.boss.score) : "";
+    const promo = s.eligible_for_promotion == null ? "&mdash;" :
+      s.eligible_for_promotion ? '<span class="chip good">Ranked above the boss</span>' : '<span class="chip warn">Not above the boss yet</span>';
+    const submits = s.submits ? num(s.submits) : "0";
+    const submitNote = s.last_submit ? "last " + esc(utc(s.last_submit)) : "";
+    const links = (p.links || []).map(([text, href]) => '<a href="' + esc(href) + '" rel="noopener">' + esc(text) + "</a>").join("");
+    return '<article class="project">' +
+      '<div class="story"><p class="label">' + esc(p.game) + "</p><h3>" + esc(p.name) + "</h3>" +
+      '<div class="chips">' + chips.join("") + "</div>" +
+      '<p class="summary">' + esc(p.summary) + "</p>" +
+      '<div class="links">' + links + "</div></div>" +
+      '<dl class="stats">' +
+      stat("League", esc(s.league || "—")) +
+      stat("League rank", rank, rankNote) +
+      stat("Ranking games", ranking, rankingNote) +
+      stat("Score", s.score != null ? esc(s.score) : "&mdash;", s.score != null ? "CodinGame's ranking score" : "") +
+      stat("League boss", boss, bossNote) +
+      stat("Promotion", promo) +
+      stat("Submits", submits, submitNote) +
+      "</dl></article>";
+  }
+
+  $("projects").innerHTML = (data.projects || []).map(projectHtml).join("") || '<p class="status">No projects yet.</p>';
+
+  const w = data.work || {};
+  $("work").innerHTML = [
+    ["open_tasks", "open tasks"], ["done_tasks", "done tasks"], ["merged_prs", "merged changes"],
+  ].map(([k, label]) => "<li><b>" + (num(w[k]) ?? "&mdash;") + "</b><span>" + label + "</span></li>").join("");
+
+  $("docs").innerHTML = (data.projects || []).flatMap((p) => (p.links || []).map(([text, href]) =>
+    '<li><a href="' + esc(href) + '" rel="noopener">' + esc(p.name) + ": " + esc(text) + "</a></li>")).join("");
+
+  // Keep the countdowns current while the page is open.
+  setInterval(() => document.querySelectorAll("[data-ends]").forEach((el) => {
+    const left = timeLeft(el.dataset.ends);
+    el.textContent = left ? "Ends in " + left : "Ended " + el.dataset.ends.slice(0, 10);
+  }), 60000);
+})();
+</script>
+</body>
+</html>
