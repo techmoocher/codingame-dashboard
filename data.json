@@ -1,8 +1,8 @@
 {
- "generated": "2026-11-05T21:18:19Z",
+ "generated": "2026-11-05T21:33:59Z",
  "owner": "techmoocher",
  "work": {
-  "open_tasks": 3,
+  "open_tasks": 4,
   "done_tasks": 12,
   "merged_prs": 21
  },
@@ -27,16 +27,16 @@
    "status": {
     "league": "Silver",
     "submitted": true,
-    "ranking_percent": 0,
-    "ranking_done": false,
-    "league_rank": 334,
+    "ranking_percent": 100,
+    "ranking_done": true,
+    "league_rank": 33,
     "league_total": 342,
-    "rank": 747,
-    "total": 857,
-    "score": 0.0,
+    "rank": 446,
+    "total": 858,
+    "score": 22.92,
     "boss": {
-     "rank": 1,
-     "score": 26.6
+     "rank": 2,
+     "score": 26.7
     },
     "eligible_for_promotion": false,
     "submits": 3,
