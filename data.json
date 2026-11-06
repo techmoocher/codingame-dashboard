@@ -1,10 +1,10 @@
 {
- "generated": "2026-11-05T23:27:02Z",
+ "generated": "2026-11-06T06:22:32Z",
  "owner": "techmoocher",
  "work": {
-  "open_tasks": 5,
-  "done_tasks": 12,
-  "merged_prs": 24
+  "open_tasks": 4,
+  "done_tasks": 15,
+  "merged_prs": 31
  },
  "projects": [
   {
@@ -30,14 +30,73 @@
     "ranking_percent": 100,
     "ranking_done": true,
     "league_rank": 331,
-    "league_total": 423,
+    "league_total": 435,
     "rank": 331,
-    "total": 862,
-    "score": 10.67,
+    "total": 872,
+    "score": 11.37,
     "boss": null,
     "eligible_for_promotion": false,
     "submits": 6,
     "last_submit": "2026-11-05T23:02:38Z"
+   }
+  },
+  {
+   "name": "Mad Pod Racing",
+   "kind": "Bot programming",
+   "game": "Mad Pod Racing",
+   "summary": "Pods race around a circuit of checkpoints; the first to finish the laps wins.",
+   "language": "C++",
+   "links": [
+    [
+     "Game page",
+     "https://www.codingame.com/multiplayer/bot-programming/mad-pod-racing"
+    ]
+   ],
+   "status": {
+    "league": "Wood 2",
+    "submitted": false,
+    "ranking_percent": null,
+    "ranking_done": false,
+    "league_rank": 91122,
+    "league_total": 104555,
+    "rank": 222614,
+    "total": 236345,
+    "score": null,
+    "boss": {
+     "rank": 2,
+     "score": 19.26
+    },
+    "eligible_for_promotion": false,
+    "submits": 1,
+    "last_submit": "2026-11-06T06:16:28.933Z"
+   }
+  },
+  {
+   "name": "Code vs Zombies",
+   "kind": "Optimization",
+   "game": "Code vs Zombies",
+   "summary": "Ash shoots zombies to save the humans; kills in the same turn score combos.",
+   "language": "C++",
+   "links": [
+    [
+     "Game page",
+     "https://www.codingame.com/multiplayer/optimization/code-vs-zombies"
+    ]
+   ],
+   "status": {
+    "league": null,
+    "submitted": true,
+    "ranking_percent": 100,
+    "ranking_done": true,
+    "league_rank": null,
+    "league_total": null,
+    "rank": 495,
+    "total": 25801,
+    "score": 220560.0,
+    "boss": null,
+    "eligible_for_promotion": null,
+    "submits": 1,
+    "last_submit": "2026-11-06T06:16:32.897Z"
    }
   }
  ]

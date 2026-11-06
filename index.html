@@ -261,19 +261,23 @@ footer {
 
   function projectHtml(p) {
     const s = p.status || {};
-    const left = timeLeft(p.ends);
+    const left = p.ends ? timeLeft(p.ends) : null;
+    const optim = p.kind === "Optimization";
     const chips = [
-      '<span class="chip" data-ends="' + esc(p.ends) + '">' + (left ? "Ends in " + esc(left) : "Ended " + esc(p.ends.slice(0, 10))) + "</span>",
+      p.ends ? '<span class="chip" data-ends="' + esc(p.ends) + '">' + (left ? "Ends in " + esc(left) : "Ended " + esc(p.ends.slice(0, 10))) + "</span>"
+        : '<span class="chip">No end date</span>',
       '<span class="chip quiet">' + esc(p.kind) + "</span>",
       '<span class="chip quiet">' + esc(p.language) + "</span>",
     ];
     let rank = "&mdash;", rankNote = s.submitted ? "after the ranking games" : "after the first submit";
     if (s.league_rank != null) { rank = num(s.league_rank) + " / " + num(s.league_total); rankNote = "overall " + num(s.rank) + " / " + num(s.total); }
+    else if (s.rank != null) { rank = num(s.rank) + " / " + num(s.total); rankNote = "overall"; }
     let ranking = "&mdash;", rankingNote = "no submit yet";
     if (s.submitted) {
       const pct = Math.max(0, Math.min(100, Number(s.ranking_percent) || 0));
       ranking = s.ranking_done ? "Done" : pct + "%";
-      rankingNote = (s.ranking_done ? "all ranking games played" : "of ranking games played") +
+      rankingNote = (optim ? (s.ranking_done ? "all validators played" : "validators running")
+        : s.ranking_done ? "all ranking games played" : "of ranking games played") +
         '<span class="bar" aria-hidden="true"><span style="width:' + pct + '%"></span></span>';
     }
     const boss = s.boss ? "Rank " + num(s.boss.rank) : "&mdash;";
@@ -290,9 +294,9 @@ footer {
       '<div class="links">' + links + "</div></div>" +
       '<dl class="stats">' +
       stat("League", esc(s.league || "—")) +
-      stat("League rank", rank, rankNote) +
-      stat("Ranking games", ranking, rankingNote) +
-      stat("Score", s.score != null ? esc(s.score) : "&mdash;", s.score != null ? "CodinGame's ranking score" : "") +
+      stat(s.league ? "League rank" : "Rank", rank, rankNote) +
+      stat(optim ? "Validators" : "Ranking games", ranking, rankingNote) +
+      stat("Score", s.score != null ? esc(s.score) : "&mdash;", s.score == null ? "" : optim ? "points over the validators" : "CodinGame's ranking score") +
       stat("League boss", boss, bossNote) +
       stat("Promotion", promo) +
       stat("Submits", submits, submitNote) +
